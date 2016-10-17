@@ -20,6 +20,7 @@ import ArtistContainer from './components/artist/ArtistContainer';
 import ArtistAlbums from './components/artist/ArtistAlbums';
 import ArtistSongs from './components/artist/ArtistSongs';
 import AllArtistForm from './components/newForm/AllArtistForm'
+import PlaylistFormContainer from './components/playlist/playlistFormContainer'
 
 
 export default () => (
@@ -33,7 +34,7 @@ export default () => (
         <Route path="albums" component={ArtistAlbums} />
         <Route path="songs" component={ArtistSongs} />
       </Route>
+      <Router path="playlists" component={PlaylistFormContainer} />
     </Route>
   </Router>
 );
-3:51

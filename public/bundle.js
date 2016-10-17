@@ -23995,6 +23995,10 @@
 	
 	var _songs2 = _interopRequireDefault(_songs);
 	
+	var _playlistFormRedux = __webpack_require__(297);
+	
+	var _playlistFormRedux2 = _interopRequireDefault(_playlistFormRedux);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	exports.default = (0, _redux.combineReducers)({
@@ -24006,7 +24010,8 @@
 	  progress: _progress2.default,
 	  selectedAlbum: _selectedAlbum2.default,
 	  selectedArtist: _selectedArtist2.default,
-	  songs: _songs2.default
+	  songs: _songs2.default,
+	  playlist: _playlistFormRedux2.default
 	});
 
 /***/ },
@@ -24575,9 +24580,13 @@
 	
 	var _ArtistSongs2 = _interopRequireDefault(_ArtistSongs);
 	
-	var _AllArtistForm = __webpack_require__(296);
+	var _AllArtistForm = __webpack_require__(291);
 	
 	var _AllArtistForm2 = _interopRequireDefault(_AllArtistForm);
+	
+	var _playlistFormContainer = __webpack_require__(299);
+	
+	var _playlistFormContainer2 = _interopRequireDefault(_playlistFormContainer);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -24597,7 +24606,8 @@
 	        { path: 'artists/:id', component: _ArtistContainer2.default, onEnter: _enterHooks.onArtistsEnter },
 	        _react2.default.createElement(_reactRouter.Route, { path: 'albums', component: _ArtistAlbums2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'songs', component: _ArtistSongs2.default })
-	      )
+	      ),
+	      _react2.default.createElement(_reactRouter.Router, { path: 'playlists', component: _playlistFormContainer2.default })
 	    )
 	  );
 	};
@@ -30296,6 +30306,15 @@
 	        { to: '/artists', activeClassName: 'menu-item active', className: 'menu-item' },
 	        'ARTISTS'
 	      )
+	    ),
+	    _react2.default.createElement(
+	      'section',
+	      null,
+	      _react2.default.createElement(
+	        _reactRouter.Link,
+	        { to: '/playlists', activeClassName: 'menu-item active', className: 'menu-item' },
+	        'PLAYLISTS'
+	      )
 	    )
 	  );
 	};
@@ -30815,14 +30834,122 @@
 	
 	var _reactRouter = __webpack_require__(217);
 	
-	var _AllArtistForm = __webpack_require__(296);
+	var _AllArtistForm = __webpack_require__(291);
 	
 	var _AllArtistForm2 = _interopRequireDefault(_AllArtistForm);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
-/* 291 */,
+/* 291 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.Form = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(172);
+	
+	var _Artists = __webpack_require__(290);
+	
+	var _Artists2 = _interopRequireDefault(_Artists);
+	
+	var _ArtistsContainer = __webpack_require__(289);
+	
+	var _ArtistsContainer2 = _interopRequireDefault(_ArtistsContainer);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Form = exports.Form = function (_React$Component) {
+	    _inherits(Form, _React$Component);
+	
+	    function Form() {
+	        _classCallCheck(this, Form);
+	
+	        return _possibleConstructorReturn(this, (Form.__proto__ || Object.getPrototypeOf(Form)).apply(this, arguments));
+	    }
+	
+	    _createClass(Form, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'form',
+	                    { className: 'form-group', onSubmit: this.props.handleSubmit },
+	                    _react2.default.createElement(
+	                        'label',
+	                        { htmlFor: 'post' },
+	                        'Filter Artists: '
+	                    ),
+	                    _react2.default.createElement('input', { className: 'form-control', name: 'post', type: 'text', onChange: this.props.handleChange })
+	                ),
+	                _react2.default.createElement(
+	                    'p',
+	                    null,
+	                    this.props.input
+	                ),
+	                _react2.default.createElement(_ArtistsContainer2.default, { input: this.props.input })
+	            );
+	        }
+	    }]);
+	
+	    return Form;
+	}(_react2.default.Component);
+	
+	function FormDecorator(InnerComponent) {
+	    return function (_React$Component2) {
+	        _inherits(StatefulForm, _React$Component2);
+	
+	        function StatefulForm(props) {
+	            _classCallCheck(this, StatefulForm);
+	
+	            var _this2 = _possibleConstructorReturn(this, (StatefulForm.__proto__ || Object.getPrototypeOf(StatefulForm)).call(this, props));
+	
+	            _this2.state = {
+	                input: ''
+	            };
+	            _this2.handleChange = _this2.handleChange.bind(_this2);
+	            return _this2;
+	        }
+	
+	        _createClass(StatefulForm, [{
+	            key: 'handleChange',
+	            value: function handleChange(event) {
+	                this.setState({ input: event.target.value });
+	            }
+	        }, {
+	            key: 'render',
+	            value: function render() {
+	                return _react2.default.createElement(InnerComponent, { input: this.state.input, handleChange: this.handleChange });
+	            }
+	        }]);
+	
+	        return StatefulForm;
+	    }(_react2.default.Component);
+	}
+	
+	var DecoratedStatefulForm = FormDecorator(Form);
+	
+	exports.default = DecoratedStatefulForm;
+
+/***/ },
 /* 292 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -31020,9 +31147,8 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
-	exports.Form = undefined;
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
@@ -31030,15 +31156,9 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactRedux = __webpack_require__(172);
+	var _reactRouter = __webpack_require__(217);
 	
-	var _Artists = __webpack_require__(290);
-	
-	var _Artists2 = _interopRequireDefault(_Artists);
-	
-	var _ArtistsContainer = __webpack_require__(289);
-	
-	var _ArtistsContainer2 = _interopRequireDefault(_ArtistsContainer);
+	var _reactRouter2 = _interopRequireDefault(_reactRouter);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -31048,79 +31168,168 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var Form = exports.Form = function (_React$Component) {
-	    _inherits(Form, _React$Component);
+	var NewPlaylistForm = function NewPlaylistForm(props) {
 	
-	    function Form() {
-	        _classCallCheck(this, Form);
+	  var handleSubmit = props.handleSubmit;
+	  console.log(props);
 	
-	        return _possibleConstructorReturn(this, (Form.__proto__ || Object.getPrototypeOf(Form)).apply(this, arguments));
-	    }
-	
-	    _createClass(Form, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                null,
-	                _react2.default.createElement(
-	                    'form',
-	                    { className: 'form-group', onSubmit: this.props.handleSubmit },
-	                    _react2.default.createElement(
-	                        'label',
-	                        { htmlFor: 'post' },
-	                        'Filter Artists: '
-	                    ),
-	                    _react2.default.createElement('input', { className: 'form-control', name: 'post', type: 'text', onChange: this.props.handleChange })
-	                ),
-	                _react2.default.createElement(
-	                    'p',
-	                    null,
-	                    this.props.input
-	                ),
-	                _react2.default.createElement(_ArtistsContainer2.default, { input: this.props.input })
-	            );
-	        }
-	    }]);
-	
-	    return Form;
-	}(_react2.default.Component);
+	  return _react2.default.createElement(
+	    'div',
+	    { className: 'well' },
+	    _react2.default.createElement(
+	      'form',
+	      { className: 'form-horizontal', onSubmit: handleSubmit },
+	      _react2.default.createElement(
+	        'fieldset',
+	        null,
+	        _react2.default.createElement(
+	          'legend',
+	          null,
+	          'New Playlist'
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'form-group' },
+	          _react2.default.createElement(
+	            'label',
+	            { className: 'col-xs-2 control-label' },
+	            'Name'
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-xs-10' },
+	            _react2.default.createElement('input', { className: 'form-control', type: 'text' })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'form-group' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-xs-10 col-xs-offset-2' },
+	            _react2.default.createElement(
+	              'button',
+	              { type: 'submit', className: 'btn btn-success' },
+	              'Create Playlist'
+	            )
+	          )
+	        )
+	      )
+	    )
+	  );
+	};
 	
 	function FormDecorator(InnerComponent) {
-	    return function (_React$Component2) {
-	        _inherits(StatefulForm, _React$Component2);
+	  return function (_React$Component) {
+	    _inherits(StatefulForm, _React$Component);
 	
-	        function StatefulForm(props) {
-	            _classCallCheck(this, StatefulForm);
+	    function StatefulForm(props) {
+	      _classCallCheck(this, StatefulForm);
 	
-	            var _this2 = _possibleConstructorReturn(this, (StatefulForm.__proto__ || Object.getPrototypeOf(StatefulForm)).call(this, props));
+	      var _this = _possibleConstructorReturn(this, (StatefulForm.__proto__ || Object.getPrototypeOf(StatefulForm)).call(this, props));
 	
-	            _this2.state = {
-	                input: ''
-	            };
-	            _this2.handleChange = _this2.handleChange.bind(_this2);
-	            return _this2;
-	        }
+	      _this.state = {
+	        input: ''
+	      };
+	      _this.handleChange = _this.handleChange.bind(_this);
+	      _this.handleSubmit = _this.handleSubmit.bind(_this);
+	      return _this;
+	    }
 	
-	        _createClass(StatefulForm, [{
-	            key: 'handleChange',
-	            value: function handleChange(event) {
-	                this.setState({ input: event.target.value });
-	            }
-	        }, {
-	            key: 'render',
-	            value: function render() {
-	                return _react2.default.createElement(InnerComponent, { input: this.state.input, handleChange: this.handleChange });
-	            }
-	        }]);
+	    _createClass(StatefulForm, [{
+	      key: 'handleChange',
+	      value: function handleChange(event) {
+	        this.setState({ input: event.target.value });
+	      }
+	    }, {
+	      key: 'handleSubmit',
+	      value: function handleSubmit(event) {
+	        console.log('submitted');
+	        event.preventDefault();
+	        var formInput = this.state.input;
+	        this.props.handleSubmit(formInput);
+	      }
+	    }, {
+	      key: 'render',
+	      value: function render() {
+	        return _react2.default.createElement(InnerComponent, { input: this.state.input, handleChange: this.handleChange, handleSubmit: this.handleSubmit });
+	      }
+	    }]);
 	
-	        return StatefulForm;
-	    }(_react2.default.Component);
+	    return StatefulForm;
+	  }(_react2.default.Component);
 	}
 	
-	var DecoratedStatefulForm = FormDecorator(Form);
+	var DecoratedForm = FormDecorator(NewPlaylistForm);
 	
-	exports.default = DecoratedStatefulForm;
+	exports.default = DecoratedForm;
+
+/***/ },
+/* 297 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = playlistReducer;
+	var CREATE_PLAYLIST = 'CREATE_PLAYLIST';
+	var initialPlaylist = {};
+	
+	var createPlaylist = exports.createPlaylist = function createPlaylist(playlist) {
+	  var action = {
+	    type: CREATE_PLAYLIST,
+	    playlist: playlist
+	  };
+	  return action;
+	};
+	
+	function playlistReducer() {
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialPlaylist;
+	  var action = arguments[1];
+	
+	  switch (action.type) {
+	    case CREATE_PLAYLIST:
+	      return action.playlist;
+	    default:
+	      return state;
+	  }
+	}
+
+/***/ },
+/* 298 */,
+/* 299 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _reactRedux = __webpack_require__(172);
+	
+	var _playlistForm = __webpack_require__(296);
+	
+	var _playlistForm2 = _interopRequireDefault(_playlistForm);
+	
+	var _playlistFormRedux = __webpack_require__(297);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	
+	  return {
+	    handleSubmit: function handleSubmit(playlistFormInput) {
+	      dispatch((0, _playlistFormRedux.createPlaylist)(playlistFormInput));
+	    }
+	  };
+	};
+	
+	var playlistFormContainer = (0, _reactRedux.connect)(null, mapDispatchToProps)(_playlistForm2.default);
+	
+	exports.default = playlistFormContainer;
 
 /***/ }
 /******/ ]);
